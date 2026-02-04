@@ -3,26 +3,31 @@ let globalData = [];
 
 // Teams to look for
 const teams = ['India', 'England', 'Australia', 'Pakistan', 'South Africa', 'West Indies', 
-               'New Zealand', 'Sri Lanka', 'Bangladesh', 'Zimbabwe', 'Afghanistan', 'Ireland', 'Netherlands',
-               'Scotland', 'Canada'];
+               'New Zealand', 'Sri Lanka', 'Bangladesh', 'Zimbabwe', 'Afghanistan', 'Ireland', 
+               'Netherlands', 'Scotland', 'Canada'];
 
 // Famous cricket players to look for
 const players = ['Sachin Tendulkar', 'Virat Kohli', 'MS Dhoni', 'Rohit Sharma', 'Steve Smith', 
                  'David Warner', 'Joe Root', 'Ben Stokes', 'Kane Williamson', 'Babar Azam',
                  'AB de Villiers', 'Chris Gayle', 'Brian Lara', 'Ricky Ponting', 'Shane Warne',
-                 'Glenn McGrath', 'James Anderson', 'Jasprit Bumrah', 'Mitchell Starc', 'Pat Cummins', 'Muttiah Muralitharan', 'Lasith Malinga', 'Jacques Kallis', 'Yuvraj Singh', 'Kapil Dev', 'Anil Kumble', 'Sunil Gavaskar', 'Rahul Dravid', 'Sourav Ganguly', 'Adam Gilchrist', 'Michael Clarke', 'Dale Steyn', 'Trent Boult', 'Faf du Plessis', 'Shakib Al Hasan', 'Tamim Iqbal', 'Shahid Afridi'];
+                 'Glenn McGrath', 'James Anderson', 'Jasprit Bumrah', 'Mitchell Starc', 'Pat Cummins',
+                  'Muttiah Muralitharan', 'Lasith Malinga', 'Jacques Kallis', 'Yuvraj Singh', 'Kapil Dev', 
+                  'Anil Kumble', 'Sunil Gavaskar', 'Rahul Dravid', 'Sourav Ganguly', 'Adam Gilchrist', 'Michael Clarke', 
+                  'Dale Steyn', 'Trent Boult', 'Faf du Plessis', 'Shakib Al Hasan', 'Tamim Iqbal', 'Shahid Afridi'];
 
 // Cricket terms to analyze
-const cricketTerms = ['bat', 'ball', 'wicket', 'run', 'over', 'bowl', 'catch', 'stump', 'innings',
+const cricketTerms = ['bat', 'ball', 'wicket', 'run', 'over', 'bowl', 'catch', 'stump', 'innings', 'bowling',
                       'century', 'fifty', 'six', 'four', 'boundary', 'spinner', 'fast bowler',
                       'test', 'odi', 't20', 'match', 'series', 'tournament', 'world cup', 'umpire',
                       'pitch', 'field', 'sixer', 'bowler', 'batsman', 'all-rounder', 'duck', 'maiden',
-                      'run rate', 'strike rate', 'powerplay', 'super over', 'no ball', 'wide ball', 'leg bye', 'byes', 'LBW'];
+                      'run rate', 'strike rate', 'powerplay', 'super over', 'no ball', 'wide ball', 'leg bye', 
+                      'byes', 'LBW', 'googly', 'yorker', 'bouncer', 'run out', 'stumping', 'cover drive', 
+                      'pull shot', 'sweep shot', 'drive', 'cut shot'];
 
 // Color palette
 const colors = ['#377bc8', '#af1e1e', '#c2ba21', '#28c700', '#00672e', '#520505', '#575151', 
-                '#002aff', '#054e15', '#f82e2e', '#2d13bd', '#0ab919', '#ff9500'
-            , '#5a00cf', '#d6a801'];
+                '#002aff', '#054e15', '#f82e2e', '#2d13bd', '#0ab919', '#ff9500',
+                '#5a00cf', '#d6a801'];
 
 // Load CSV data
 d3.csv('newopenorca_cricket_regex_2_300.csv').then(data => {
@@ -478,10 +483,10 @@ function createWordCloud(data) {
         .style('opacity', 0);
     
     const layout = d3.layout.cloud()
-        .size([width - 40, height - 40])
+        .size([width - 80, height - 80])
         .words(words)
         .padding(8)
-        .rotate(() => (Math.random() > 0.7 ? 90 : 0))
+        .rotate(() => (0))
         .font('Arial, sans-serif')
         .fontSize(d => sizeScale(d.size))
         .on('end', draw);
@@ -494,7 +499,7 @@ function createWordCloud(data) {
             .attr('transform', `translate(${width / 2},${height / 2})`);
         
         // Define high-contrast color gradient for words
-        const colorGradient = ['#f5f7ff', '#bfefff', '#7df9ff', '#ff8ef7', '#ffd3ff', '#9dffea', '#a7b6ff', '#ffb3d9'];
+        const colorGradient = ['#f5f7ff', '#bfefff', '#7df9ff', '#ff8ef7', '#ffd3ff', '#9dffea', '#a7b6ff', '#7de580', '#ffb3d9','#ffe680'];
         
         g.selectAll('text')
             .data(words)
