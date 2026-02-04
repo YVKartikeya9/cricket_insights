@@ -22,7 +22,7 @@ const cricketTerms = ['bat', 'ball', 'wicket', 'run', 'over', 'bowl', 'catch', '
                       'pitch', 'field', 'sixer', 'bowler', 'batsman', 'all-rounder', 'duck', 'maiden',
                       'run rate', 'strike rate', 'powerplay', 'super over', 'no ball', 'wide ball', 'leg bye', 
                       'byes', 'LBW', 'googly', 'yorker', 'bouncer', 'run out', 'stumping', 'cover drive', 
-                      'pull shot', 'sweep shot', 'drive', 'cut shot'];
+                      'pull shot', 'sweep shot', 'drive', 'cut shot', 'captain', 'coach'];
 
 // Color palette
 const colors = ['#377bc8', '#af1e1e', '#c2ba21', '#28c700', '#00672e', '#520505', '#575151', 
