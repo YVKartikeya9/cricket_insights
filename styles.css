@@ -284,9 +284,8 @@ footer {
 /* Network specific */
 .node circle {
     cursor: pointer;
-    stroke: #00ffff;
+    stroke: #f1f1f1;
     stroke-width: 2px;
-    filter: drop-shadow(0 0 5px rgba(0, 255, 255, 0.6));
 }
 
 .node text {

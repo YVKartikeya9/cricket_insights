@@ -3,22 +3,26 @@ let globalData = [];
 
 // Teams to look for
 const teams = ['India', 'England', 'Australia', 'Pakistan', 'South Africa', 'West Indies', 
-               'New Zealand', 'Sri Lanka', 'Bangladesh', 'Zimbabwe', 'Afghanistan', 'Ireland'];
+               'New Zealand', 'Sri Lanka', 'Bangladesh', 'Zimbabwe', 'Afghanistan', 'Ireland', 'Netherlands',
+               'Scotland', 'Canada'];
 
 // Famous cricket players to look for
 const players = ['Sachin Tendulkar', 'Virat Kohli', 'MS Dhoni', 'Rohit Sharma', 'Steve Smith', 
                  'David Warner', 'Joe Root', 'Ben Stokes', 'Kane Williamson', 'Babar Azam',
                  'AB de Villiers', 'Chris Gayle', 'Brian Lara', 'Ricky Ponting', 'Shane Warne',
-                 'Glenn McGrath', 'James Anderson', 'Jasprit Bumrah', 'Mitchell Starc', 'Pat Cummins'];
+                 'Glenn McGrath', 'James Anderson', 'Jasprit Bumrah', 'Mitchell Starc', 'Pat Cummins', 'Muttiah Muralitharan', 'Lasith Malinga', 'Jacques Kallis', 'Yuvraj Singh', 'Kapil Dev', 'Anil Kumble', 'Sunil Gavaskar', 'Rahul Dravid', 'Sourav Ganguly', 'Adam Gilchrist', 'Michael Clarke', 'Dale Steyn', 'Trent Boult', 'Faf du Plessis', 'Shakib Al Hasan', 'Tamim Iqbal', 'Shahid Afridi'];
 
 // Cricket terms to analyze
 const cricketTerms = ['bat', 'ball', 'wicket', 'run', 'over', 'bowl', 'catch', 'stump', 'innings',
                       'century', 'fifty', 'six', 'four', 'boundary', 'spinner', 'fast bowler',
-                      'test', 'odi', 't20', 'match', 'series', 'tournament', 'world cup'];
+                      'test', 'odi', 't20', 'match', 'series', 'tournament', 'world cup', 'umpire',
+                      'pitch', 'field', 'sixer', 'bowler', 'batsman', 'all-rounder', 'duck', 'maiden',
+                      'run rate', 'strike rate', 'powerplay', 'super over', 'no ball', 'wide ball', 'leg bye', 'byes', 'LBW'];
 
 // Color palette
 const colors = ['#377bc8', '#af1e1e', '#c2ba21', '#28c700', '#00672e', '#520505', '#575151', 
-                '#002aff', '#054e15', '#f82e2e', '#2d13bd', '#0ab919'];
+                '#002aff', '#054e15', '#f82e2e', '#2d13bd', '#0ab919', '#ff9500'
+            , '#5a00cf', '#d6a801'];
 
 // Load CSV data
 d3.csv('newopenorca_cricket_regex_2_300.csv').then(data => {
@@ -44,7 +48,7 @@ function createTeamNetwork(data) {
     container.html('');
     
     const width = container.node().getBoundingClientRect().width;
-    const height = 600;
+    const height = 650;
     
     // Find team co-occurrences
     const teamCounts = {};
@@ -112,7 +116,7 @@ function createTeamNetwork(data) {
     const simulation = d3.forceSimulation(nodes)
         .force('link', d3.forceLink(links).id(d => d.id).distance(d => 250 - d.value * 5))
         .force('charge', d3.forceManyBody().strength(-800))
-        .force('center', d3.forceCenter(width / 2, height / 2))
+        .force('center', d3.forceCenter(width / 2, height / 2 - 30))
         .force('collision', d3.forceCollide().radius(d => Math.sqrt(d.count) * 3 + 30));
     
     // Create links
@@ -157,7 +161,6 @@ function createTeamNetwork(data) {
         .style('font-size', '12px')
         .style('font-weight', 'bold')
         .style('fill', '#ffffff')
-        .style('text-shadow', '0 0 10px rgba(0, 255, 255, 0.6), 0 0 6px rgba(0, 0, 0, 0.9)')
         .style('pointer-events', 'none');
     
     simulation.on('tick', () => {
@@ -370,7 +373,7 @@ function createQuestionTypesChart(data) {
         .attr('stroke', 'white')
         .attr('stroke-width', 3)
         .on('mouseover', (event, d) => {
-            const percent = ((d.data.value / data.length) * 100).toFixed(1);
+            const percent = ((d.data.value / data.length) * 100).toFixed(2);
             tooltip.transition().duration(200).style('opacity', .9);
             tooltip.html(`<strong>${d.data.category}</strong><br/>Count: ${d.data.value}<br/>Percentage: ${percent}%`)
                 .style('left', (event.pageX + 10) + 'px')
@@ -388,8 +391,8 @@ function createQuestionTypesChart(data) {
         .style('font-weight', 'bold')
         .style('fill', 'white')
         .text(d => {
-            const percent = ((d.data.value / data.length) * 100).toFixed(0);
-            return percent > 5 ? `${percent}%` : '';
+            const percent = ((d.data.value / data.length) * 100).toFixed(2);
+            return `${percent}%`;
         });
     
     // Add center text
@@ -754,7 +757,7 @@ function createComplexityChart(data) {
     
     stats.append('text')
         .attr('x', 10)
-        .attr('y', 20)
+        .attr('y', 15)
         .style('font-size', '13px')
         .style('font-weight', 'bold')
         .style('fill', '#00ffff')
@@ -762,14 +765,14 @@ function createComplexityChart(data) {
     
     stats.append('text')
         .attr('x', 10)
-        .attr('y', 40)
+        .attr('y', 35)
         .style('font-size', '12px')
         .style('fill', '#e0e0e0')
         .text(`Mean: ${mean} words`);
     
     stats.append('text')
         .attr('x', 10)
-        .attr('y', 55)
+        .attr('y', 50)
         .style('font-size', '12px')
         .style('fill', '#e0e0e0')
         .text(`Median: ${median} words`);
