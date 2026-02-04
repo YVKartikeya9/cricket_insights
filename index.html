@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cricket Data Visualizations</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-cloud/1.2.5/d3.layout.cloud.min.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">Cricket Analytics</div>
+            <ul class="nav-menu">
+                <li><a href="#network" class="nav-link">Team Network</a></li>
+                <li><a href="#players" class="nav-link">Players</a></li>
+                <li><a href="#types" class="nav-link">Question Types</a></li>
+                <li><a href="#terms" class="nav-link">Common Terms</a></li>
+                <li><a href="#stats" class="nav-link">Statistics</a></li>
+                <li><a href="#complexity" class="nav-link">Complexity</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <h1>Cricket Dataset Visualization Dashboard</h1>
+        <p>Interactive analysis of cricket-related questions</p>
+    </div>
+
+    <div class="container">
+        <!-- Visualization 1: Team Co-occurrence Network -->
+        <section id="network" class="viz-section">
+            <h2>Question 1: Team Co-occurrence Network</h2>
+            <p class="description">Which cricket teams are frequently mentioned together in the same questions?</p>
+            <div id="network-viz" class="visualization"></div>
+            <div class="legend" id="network-legend"></div>
+        </section>
+
+        <!-- Visualization 2: Most Popular Cricket Players -->
+        <section id="players" class="viz-section">
+            <h2>Question 2: Most Popular Cricket Players</h2>
+            <p class="description">Which individual cricket players are talked about most frequently?</p>
+            <div id="players-viz" class="visualization"></div>
+        </section>
+
+        <!-- Visualization 3: Question Types -->
+        <section id="types" class="viz-section">
+            <h2>Question 3: Question Types Distribution</h2>
+            <p class="description">What are the different types of questions asked about cricket?</p>
+            <div id="types-viz" class="visualization"></div>
+        </section>
+
+        <!-- Visualization 4: Most Common Cricket Terms -->
+        <section id="terms" class="viz-section">
+            <h2>Question 4: Most Common Cricket Terms</h2>
+            <p class="description">What cricket-related words appear most frequently?</p>
+            <div id="terms-viz" class="visualization"></div>
+        </section>
+
+        <!-- Visualization 5: Data-Heavy vs Descriptive Questions -->
+        <section id="stats" class="viz-section">
+            <h2>Question 5: Statistical vs Descriptive Questions</h2>
+            <p class="description">What proportion of questions contain numbers versus qualitative descriptions?</p>
+            <div id="stats-viz" class="visualization"></div>
+        </section>
+
+        <!-- Visualization 6: Question Complexity Distribution -->
+        <section id="complexity" class="viz-section">
+            <h2>Question 6: Question Complexity Distribution</h2>
+            <p class="description">How complex are the questions based on word count?</p>
+            <div id="complexity-viz" class="visualization"></div>
+        </section>
+    </div>
+
+    <footer>
+        <p>Cricket Data Visualization Project | Created with D3.js</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
