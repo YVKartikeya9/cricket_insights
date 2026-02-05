@@ -34,6 +34,14 @@
         <section id="network" class="viz-section">
             <h2>Question 1: Team Co-occurrence Network</h2>
             <p class="description">Which cricket teams are frequently mentioned together in the same questions?</p>
+            <div id="team-filter" class="team-filter">
+                <h3>Select Teams to View</h3>
+                <div class="filter-controls">
+                    <button id="select-all-teams" class="filter-btn">Select All</button>
+                    <button id="deselect-all-teams" class="filter-btn">Deselect All</button>
+                </div>
+                <div id="team-checkboxes" class="team-checkboxes"></div>
+            </div>
             <div class="network-container">
                 <div id="network-viz" class="visualization"></div>
                 <div id="comentions-list" class="comentions-sidebar">

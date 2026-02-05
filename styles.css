@@ -381,6 +381,103 @@ footer {
     align-items: flex-start;
 }
 
+/* Team Filter Styles */
+.team-filter {
+    background: rgba(10, 10, 30, 0.4);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    position: relative;
+    z-index: 10;
+}
+
+.team-filter h3 {
+    color: #48dbfb;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+    position: relative;
+    z-index: 10;
+}
+
+.filter-controls {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 10;
+}
+
+.filter-btn {
+    background: linear-gradient(135deg, rgba(255, 0, 255, 0.2), rgba(0, 255, 255, 0.2));
+    color: #00ffff;
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 10;
+}
+
+.filter-btn:hover {
+    background: linear-gradient(135deg, rgba(255, 0, 255, 0.4), rgba(0, 255, 255, 0.4));
+    border-color: rgba(0, 255, 255, 0.5);
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+}
+
+.team-checkboxes {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 0.7rem;
+    position: relative;
+    z-index: 10;
+}
+
+.team-checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    padding: 0.4rem 0.6rem;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    background: rgba(255, 255, 255, 0.02);
+    position: relative;
+    z-index: 10;
+}
+
+.team-checkbox-label:hover {
+    background: rgba(0, 255, 255, 0.1);
+    transform: translateX(2px);
+}
+
+.team-checkbox {
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+    accent-color: #00ffff;
+}
+
+.team-checkbox-color {
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    flex-shrink: 0;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.team-checkbox-text {
+    color: #e1e4ee;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+}
+
 #network-viz {
     flex: 1;
     min-height: 650px;

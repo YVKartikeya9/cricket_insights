@@ -74,6 +74,9 @@ function createTeamNetwork(data) {
     const width = container.node().getBoundingClientRect().width;
     const height = 800;
     
+    // Initialize selected teams (all selected by default)
+    let selectedTeams = new Set(teams);
+    
     // Find team co-occurrences
     const teamCounts = {};
     const cooccurrences = {};
@@ -236,6 +239,72 @@ function createTeamNetwork(data) {
     // Add legend
     d3.select('#network-legend')
         .html('<p><strong>Tip:</strong> Drag nodes to explore connections. Node size = total mentions, Link thickness = co-mentions</p>');
+    
+    // Create team filter checkboxes
+    createTeamFilter();
+    
+    function createTeamFilter() {
+        const filterContainer = d3.select('#team-checkboxes');
+        filterContainer.html('');
+        
+        // Create checkboxes for all teams that have data
+        const availableTeams = nodes.map(n => n.id);
+        
+        availableTeams.forEach(team => {
+            const label = filterContainer.append('label')
+                .attr('class', 'team-checkbox-label');
+            
+            label.append('input')
+                .attr('type', 'checkbox')
+                .attr('class', 'team-checkbox')
+                .attr('value', team)
+                .property('checked', true)
+                .on('change', function() {
+                    if (this.checked) {
+                        selectedTeams.add(team);
+                    } else {
+                        selectedTeams.delete(team);
+                    }
+                    updateVisualization();
+                });
+            
+            label.append('span')
+                .attr('class', 'team-checkbox-color')
+                .style('background-color', teamColorMap[team]);
+            
+            label.append('span')
+                .attr('class', 'team-checkbox-text')
+                .text(team);
+        });
+        
+        // Select All button
+        d3.select('#select-all-teams').on('click', () => {
+            availableTeams.forEach(team => selectedTeams.add(team));
+            d3.selectAll('.team-checkbox').property('checked', true);
+            updateVisualization();
+        });
+        
+        // Deselect All button
+        d3.select('#deselect-all-teams').on('click', () => {
+            selectedTeams.clear();
+            d3.selectAll('.team-checkbox').property('checked', false);
+            updateVisualization();
+        });
+    }
+    
+    function updateVisualization() {
+        // Filter nodes and links based on selected teams
+        node.style('display', d => selectedTeams.has(d.id) ? null : 'none');
+        
+        link.style('display', d => {
+            const sourceId = typeof d.source === 'object' ? d.source.id : d.source;
+            const targetId = typeof d.target === 'object' ? d.target.id : d.target;
+            return selectedTeams.has(sourceId) && selectedTeams.has(targetId) ? null : 'none';
+        });
+        
+        // Restart simulation with reduced alpha for smoother transition
+        simulation.alpha(0.1).restart();
+    }
     
     // Create top 10 co-mentions list
     const sortedLinks = links
