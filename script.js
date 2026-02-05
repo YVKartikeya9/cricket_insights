@@ -1,3 +1,13 @@
+// Scroll to top on page load
+window.addEventListener('load', () => {
+    window.scrollTo(0, 0);
+});
+
+// Also ensure scroll to top on beforeunload (preparation for reload)
+if (history.scrollRestoration) {
+    history.scrollRestoration = 'manual';
+}
+
 // Load and process the CSV data
 let globalData = [];
 
@@ -47,6 +57,34 @@ const teamColorMap = {
     'Scotland': colors[13],
     'Canada': colors[14]
 };
+
+// Initialize navbar visibility after animation
+function initializeLoadingAnimation() {
+    const navbar = document.getElementById('navbar');
+    const hero = document.querySelector('.hero');
+    const container = document.querySelector('.container');
+    const loadingScreen = document.getElementById('loading-screen');
+    
+    // Start fading in content slightly before logo finishes moving (2.3s)
+    setTimeout(() => {
+        if (navbar) navbar.classList.add('visible');
+        if (hero) hero.classList.add('visible');
+        if (container) container.classList.add('visible');
+    }, 2300);
+    
+    // Fade out loading screen as content fades in (2.5s)
+    setTimeout(() => {
+        if (loadingScreen) {
+            loadingScreen.classList.add('fade-out');
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+            }, 800);
+        }
+    }, 2500);
+}
+
+// Start animation immediately
+initializeLoadingAnimation();
 
 // Load CSV data
 d3.csv('openorca_cricket_regex_2_500.csv').then(data => {
@@ -302,32 +340,56 @@ function createTeamNetwork(data) {
             return selectedTeams.has(sourceId) && selectedTeams.has(targetId) ? null : 'none';
         });
         
+        // Update co-mentions list to show only selected teams
+        updateComentionsList();
+        
         // Restart simulation with reduced alpha for smoother transition
         simulation.alpha(0.1).restart();
     }
     
-    // Create top 10 co-mentions list
-    const sortedLinks = links
-        .sort((a, b) => b.value - a.value);
+    function updateComentionsList() {
+        // Filter links to only include selected teams
+        const filteredLinks = links.filter(d => {
+            const sourceId = typeof d.source === 'object' ? d.source.id : d.source;
+            const targetId = typeof d.target === 'object' ? d.target.id : d.target;
+            return selectedTeams.has(sourceId) && selectedTeams.has(targetId);
+        });
+        
+        // Sort by value (co-mentions count)
+        const sortedLinks = filteredLinks.sort((a, b) => b.value - a.value);
+        
+        const comentionsContent = d3.select('#comentions-content');
+        comentionsContent.html('');
+        
+        if (sortedLinks.length === 0) {
+            comentionsContent.append('p')
+                .attr('class', 'no-comentions')
+                .style('color', '#999')
+                .style('font-style', 'italic')
+                .style('padding', '20px')
+                .text('No co-mentions for selected teams');
+            return;
+        }
+        
+        const list = comentionsContent.append('ol')
+            .attr('class', 'comentions-list');
+        
+        list.selectAll('li')
+            .data(sortedLinks)
+            .join('li')
+            .attr('class', 'comention-item')
+            .html(d => `
+                <div class="comention-teams">
+                    <span class="team-name">${d.source.id || d.source}</span>
+                    <span class="separator">↔</span>
+                    <span class="team-name">${d.target.id || d.target}</span>
+                </div>
+                <div class="comention-count">${d.value} co-mentions</div>
+            `);
+    }
     
-    const comentionsContent = d3.select('#comentions-content');
-    comentionsContent.html('');
-    
-    const list = comentionsContent.append('ol')
-        .attr('class', 'comentions-list');
-    
-    list.selectAll('li')
-        .data(sortedLinks)
-        .join('li')
-        .attr('class', 'comention-item')
-        .html(d => `
-            <div class="comention-teams">
-                <span class="team-name">${d.source.id || d.source}</span>
-                <span class="separator">↔</span>
-                <span class="team-name">${d.target.id || d.target}</span>
-            </div>
-            <div class="comention-count">${d.value} co-mentions</div>
-        `);
+    // Initialize co-mentions list
+    updateComentionsList();
 }
 
 // Visualization 2: Most Popular Cricket Players
