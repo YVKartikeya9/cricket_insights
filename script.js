@@ -29,6 +29,25 @@ const colors = ['#377bc8', '#af1e1e', '#c2ba21', '#28c700', '#00672e', '#520505'
                 '#002aff', '#054e15', '#f82e2e', '#2d13bd', '#0ab919', '#ff9500',
                 '#5a00cf', '#d6a801'];
 
+// Team color map - assigns consistent colors from the palette to each team
+const teamColorMap = {
+    'India': colors[0],
+    'England': colors[1],
+    'Australia': colors[2],
+    'Pakistan': colors[3],
+    'South Africa': colors[4],
+    'West Indies': colors[5],
+    'New Zealand': colors[6],
+    'Sri Lanka': colors[7],
+    'Bangladesh': colors[8],
+    'Zimbabwe': colors[9],
+    'Afghanistan': colors[10],
+    'Ireland': colors[11],
+    'Netherlands': colors[12],
+    'Scotland': colors[13],
+    'Canada': colors[14]
+};
+
 // Load CSV data
 d3.csv('openorca_cricket_regex_2_500.csv').then(data => {
     globalData = data;
@@ -166,7 +185,7 @@ function createTeamNetwork(data) {
     
     node.append('circle')
         .attr('r', d => Math.sqrt(d.count) * 3 + 10)
-        .style('fill', (d, i) => colors[i % colors.length])
+        .style('fill', d => teamColorMap[d.id] || '#999999')
         .on('mouseover', (event, d) => {
             tooltip.transition().duration(200).style('opacity', .9);
             tooltip.html(`<strong>${d.id}</strong><br/>Mentions: ${d.count}`)
