@@ -53,7 +53,7 @@ function createTeamNetwork(data) {
     container.html('');
     
     const width = container.node().getBoundingClientRect().width;
-    const height = 650;
+    const height = 800;
     
     // Find team co-occurrences
     const teamCounts = {};
@@ -121,7 +121,7 @@ function createTeamNetwork(data) {
     const simulation = d3.forceSimulation(nodes)
         .force('link', d3.forceLink(links).id(d => d.id).distance(d => 250 - d.value * 5))
         .force('charge', d3.forceManyBody().strength(-800))
-        .force('center', d3.forceCenter(width / 2, height / 2 - 30))
+        .force('center', d3.forceCenter(width / 2, height / 2 - 80))
         .force('collision', d3.forceCollide().radius(d => Math.sqrt(d.count) * 3 + 30));
     
     // Create links
@@ -198,6 +198,29 @@ function createTeamNetwork(data) {
     // Add legend
     d3.select('#network-legend')
         .html('<p><strong>Tip:</strong> Drag nodes to explore connections. Node size = total mentions, Link thickness = co-mentions</p>');
+    
+    // Create top 10 co-mentions list
+    const sortedLinks = links
+        .sort((a, b) => b.value - a.value);
+    
+    const comentionsContent = d3.select('#comentions-content');
+    comentionsContent.html('');
+    
+    const list = comentionsContent.append('ol')
+        .attr('class', 'comentions-list');
+    
+    list.selectAll('li')
+        .data(sortedLinks)
+        .join('li')
+        .attr('class', 'comention-item')
+        .html(d => `
+            <div class="comention-teams">
+                <span class="team-name">${d.source.id || d.source}</span>
+                <span class="separator">↔</span>
+                <span class="team-name">${d.target.id || d.target}</span>
+            </div>
+            <div class="comention-count">${d.value} co-mentions</div>
+        `);
 }
 
 // Visualization 2: Most Popular Cricket Players

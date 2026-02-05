@@ -374,6 +374,97 @@ footer {
     text-shadow: 0 0 2px rgba(72, 219, 251, 0.2);
 }
 
+/* Network container with sidebar */
+.network-container {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+}
+
+#network-viz {
+    flex: 1;
+    min-height: 650px;
+}
+
+.comentions-sidebar {
+    width: 320px;
+    background: rgba(10, 10, 30, 0.4);
+    border-radius: 8px;
+    padding: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: sticky;
+    top: 100px;
+    max-height: 800px;
+    overflow-y: auto;
+}
+
+.comentions-sidebar h3 {
+    color: #48dbfb;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.comentions-list {
+    list-style: decimal;
+    padding-left: 1.5rem;
+    color: #e1e4ee;
+}
+
+.comention-item {
+    padding: 0.5rem 0;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.comention-item:last-child {
+    border-bottom: none;
+}
+
+.comention-teams {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.team-name {
+    color: #e1e4ee;
+    font-weight: 400;
+    font-size: 0.9rem;
+}
+
+.separator {
+    color: #8ef9ff;
+    font-weight: normal;
+    font-size: 0.9rem;
+}
+
+.comention-count {
+    color: #8ef9ff;
+    font-size: 0.8rem;
+    margin-top: 0.2rem;
+    font-weight: 400;
+}
+
+.comentions-sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.comentions-sidebar::-webkit-scrollbar-track {
+    background: rgba(10, 10, 30, 0.5);
+    border-radius: 10px;
+}
+
+.comentions-sidebar::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #ff00ff, #00ffff);
+    border-radius: 10px;
+}
+
+.comentions-sidebar::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #ff00ff, #00ffff);
+    opacity: 0.8;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .nav-menu {
@@ -396,6 +487,17 @@ footer {
     .visualization {
         min-height: 400px;
         padding: 1rem;
+    }
+
+    .network-container {
+        flex-direction: column;
+    }
+
+    .comentions-sidebar {
+        width: 100%;
+        position: relative;
+        top: 0;
+        max-height: 500px;
     }
 }
 
