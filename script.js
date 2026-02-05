@@ -132,7 +132,26 @@ function createTeamNetwork(data) {
         .attr('class', 'link')
         .attr('stroke-width', d => Math.sqrt(d.value) * 2)
         .style('stroke', '#8ef9ff')
-        .style('stroke-opacity', 0.7);
+        .style('stroke-opacity', 0.7)
+        .on('mouseover', (event, d) => {
+            tooltip.transition().duration(200).style('opacity', .9);
+            tooltip.html(`<strong>${d.source.id} ↔ ${d.target.id}</strong><br/>Co-mentions: ${d.value}`)
+                .style('left', (event.pageX + 10) + 'px')
+                .style('top', (event.pageY - 28) + 'px');
+            // Highlight the link
+            d3.select(event.currentTarget)
+                .style('stroke', '#00ff00')
+                .style('stroke-opacity', 1)
+                .style('cursor', 'pointer');
+        })
+        .on('mouseout', (event) => {
+            tooltip.transition().duration(500).style('opacity', 0);
+            // Reset the link style
+            d3.select(event.currentTarget)
+                .style('stroke', '#8ef9ff')
+                .style('stroke-opacity', 0.7)
+                .style('cursor', 'default');
+        });
     
     // Create nodes
     const node = svg.append('g')
