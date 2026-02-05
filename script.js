@@ -30,7 +30,7 @@ const colors = ['#377bc8', '#af1e1e', '#c2ba21', '#28c700', '#00672e', '#520505'
                 '#5a00cf', '#d6a801'];
 
 // Load CSV data
-d3.csv('newopenorca_cricket_regex_2_300.csv').then(data => {
+d3.csv('openorca_cricket_regex_2_500.csv').then(data => {
     globalData = data;
     console.log(`Loaded ${data.length} questions`);
     
